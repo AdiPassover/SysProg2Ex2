@@ -168,7 +168,8 @@ ariel::Graph& ariel::operator++(Graph& graph) { // Graph++
 }
 
 ariel::Graph ariel::operator++(Graph& graph, int) { // ++Graph
-    return graph + 1;
+    graph += 1;
+    return graph - 1;
 }
 
 ariel::Graph& ariel::operator--(Graph& graph) { // Graph--
@@ -177,7 +178,8 @@ ariel::Graph& ariel::operator--(Graph& graph) { // Graph--
 }
 
 ariel::Graph ariel::operator--(Graph& graph, int) { // --Graph
-    return graph - 1;
+    graph -= 1;
+    return graph + 1;
 }
 
 ariel::Graph ariel::operator+(const Graph& graph) { // +Graph
@@ -200,27 +202,21 @@ bool equalsMatrix(ariel::Graph g1, size_t row, size_t col, ariel::Graph g2) {
 }
 
 bool ariel::operator<(const Graph& left, const Graph& right) {
-    size_t diff = right.getNumVertices() - left.getNumVertices();
-    for (size_t i = 0; i < diff; i++) {
-        for (size_t j = 0; j < diff; j++) {
-            if (equalsMatrix(left,i,j,right)) return true; // right contains left and doesn't equal left
+    if (right.getNumVertices() > left.getNumVertices()) {
+        size_t diff = right.getNumVertices() - left.getNumVertices();
+        for (size_t i = 0; i <= diff; i++) {
+            for (size_t j = 0; j <= diff; j++) {
+                if (equalsMatrix(left,i,j,right)) return true; // right contains left and doesn't equal left
+            }
         }
     }
 
     if (left.getNumEdges() < right.getNumEdges()) return true;
-    return left.getNumEdges() == right.getNumEdges() && diff > 0;
+    return left.getNumEdges() == right.getNumEdges() && right.getNumVertices() > left.getNumVertices();
 }
 
 bool ariel::operator>(const Graph& left, const Graph& right) {
-    size_t diff = left.getNumVertices() - right.getNumVertices();
-    for (size_t i = 0; i < diff; i++) {
-        for (size_t j = 0; j < diff; j++) {
-            if (equalsMatrix(right,i,j,left)) return true; // left contains right and doesn't equal right
-        }
-    }
-
-    if (left.getNumEdges() > right.getNumEdges()) return true;
-    return left.getNumEdges() == right.getNumEdges() && diff > 0;
+    return right < left;
 }
 
 bool ariel::operator==(const Graph& left, const Graph& right) {

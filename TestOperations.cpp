@@ -149,18 +149,84 @@ TEST_CASE("Test scalar operations") {
     CHECK(g5.printGraph() == "[-, -2, -2, -1]\n[X, -, 2, 5]\n[10, 18, -, 31]\n[52, 86, -4, -]\n");
 
     g5 = g1 * 3;
-    CHECK(g5.printGraph() == "[-, 11, 10]\n[11, -, 11]\n[10, 11, -]\n");
+    CHECK(g5.printGraph() == "[-, 3, X]\n[3, -, 3]\n[X, 3, -]\n");
     g5 = g3 * (-2);
-    CHECK(g5.printGraph() == "[-, -19, -18, -17]\n[-16, -, -15, -14]\n[-13, -12, -, -11]\n[-10, -9, -8, -]\n");
-    g5 += -1;
-    CHECK(g5.printGraph() == "[-, -20, -19, -18]\n[-17, -, -16, -15]\n[-14, -13, -, -12]\n[-11, -10, -9, -]\n");
+    CHECK(g5.printGraph() == "[-, -2, -4, -6]\n[-8, -, -10, -12]\n[-14, -16, -, -18]\n[-20, -22, -24, -]\n");
+    g5 *= -1;
+    CHECK(g5.printGraph() == "[-, 2, 4, 6]\n[8, -, 10, 12]\n[14, 16, -, 18]\n[20, 22, 24, -]\n");
 
-    g5 = g2 - 10;
-    CHECK(g5.printGraph() == "[-, -9, -9]\n[-9, -, -8]\n[-9, -8, -]\n");
-    g5 = g4 - (-2);
-    CHECK(g5.printGraph() == "[-, 3, 3, 4]\n[5, -, 7, 10]\n[15, 23, -, 36]\n[57, 91, 1, -]\n");
-    g5 -= 5;
-    CHECK(g5.printGraph() == "[-, -2, -2, -1]\n[X, -, 2, 5]\n[10, 18, -, 31]\n[52, 86, -4, -]\n");
+    g5 = g2 / 2;
+    CHECK(g5.printGraph() == "[-, X, X]\n[X, -, 1]\n[X, 1, -]\n");
+    g5 = g4 / (-2);
+    CHECK(g5.printGraph() == "[-, X, X, -1]\n[-1, -, -2, -4]\n[-6, -10, -, -17]\n[-27, -44, X, -]\n");
+    g5 /= 5;
+    CHECK(g5.printGraph() == "[-, X, X, X]\n[X, -, X, X]\n[-1, -2, -, -3]\n[-5, -8, X, -]\n");
+
+    CHECK((++g1).printGraph() == "[-, 2, 1]\n[2, -, 2]\n[1, 2, -]\n");
+    CHECK((g1++).printGraph() == "[-, 2, 1]\n[2, -, 2]\n[1, 2, -]\n");
+    CHECK((--g1).printGraph() == "[-, 2, 1]\n[2, -, 2]\n[1, 2, -]\n");
+    CHECK((g1--).printGraph() == "[-, 2, 1]\n[2, -, 2]\n[1, 2, -]\n");
+    CHECK(g1.printGraph() == "[-, 1, X]\n[1, -, 1]\n[X, 1, -]\n");
+}
+
+TEST_CASE("Comparing operations") {
+    ariel::Graph g1;
+    ariel::Graph g1copy;
+    vector<vector<int>> graph = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 1, 0}};
+    g1.loadGraph(graph);
+    g1copy.loadGraph(graph);
+    ariel::Graph g2;
+    vector<vector<int>> weightedGraph = {
+        {0, 1, 1},
+        {1, 0, 2},
+        {1, 2, 0}};
+    g2.loadGraph(weightedGraph);
+    ariel::Graph g20;
+    vector<vector<int>> weightedGraph3 = {
+        {0, 1, 1},
+        {3, 0, 2},
+        {1, 2, 0}};
+    g20.loadGraph(weightedGraph3);
+    ariel::Graph g3;
+    vector<vector<int>> graph1 = {
+        {0, 1, 0, 3},
+        {1, 0, 1, 1},
+        {7, 1, 0, 2},
+        {10,1, 2, 0}};
+    g3.loadGraph(graph1);
+    ariel::Graph g4;
+    vector<vector<int>> weightedGraph1 = {
+        {0, 1, 1, 2},
+        {1, 0, 1, 8},
+        {0, 1, 0,34},
+        {55,89,-1,0}};
+    g4.loadGraph(weightedGraph1);
+
+    bool res = g1 == g1copy;
+    CHECK(res);
+    res = g2 == g20;
+    CHECK(res);
+    res = g1 != g1copy;
+    CHECK(!res);
+    res = g1 != g3 && g1 != g2 && g1 != g4;
+    CHECK(res);
+
+    res = g1 < g2 && g2 > g1;
+    CHECK(res);
+    res = g1 < g3 && g3 > g1;
+    CHECK(res);
+    res = g2 < g3 && g3 > g2;
+    CHECK(res);
+    res = g3 > g2;
+
+    res = g1 <= g1copy && g1copy >= g1;
+    CHECK(res);
+    res = g2 <= g2 && g2 >= g2 && g2 <= g3 && g3 >= g2;
+    CHECK(res);
+    
 }
 
 TEST_CASE("Invalid operations")

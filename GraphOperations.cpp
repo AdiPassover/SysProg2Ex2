@@ -96,7 +96,7 @@ ariel::Graph ariel::operator+(const Graph& g, int scalar) {
         for (size_t j = 0; j < n; j++) {
             if (i == j) continue;
             int edge = g.getEdge(i,j);
-            if (edge == INF) { edge = 0; }
+            if (edge == INF) { continue; }
             matrix[i][j] = edge + scalar;
         }
     }
@@ -212,7 +212,8 @@ bool ariel::operator<(const Graph& left, const Graph& right) {
     }
 
     if (left.getNumEdges() < right.getNumEdges()) return true;
-    return left.getNumEdges() == right.getNumEdges() && right.getNumVertices() > left.getNumVertices();
+    if (left.getNumEdges() > right.getNumEdges()) return false;
+    return right.getNumVertices() > left.getNumVertices();
 }
 
 bool ariel::operator>(const Graph& left, const Graph& right) {

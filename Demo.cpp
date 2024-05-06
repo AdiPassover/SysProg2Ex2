@@ -48,6 +48,24 @@ int main()
         {1, 0, 0, 1, 0}};
     ariel::Graph g5;
     g5.loadGraph(graph2); // Load the graph to the object.
+
+    vector<vector<int>> graph10 = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 1, 0}};
+    vector<vector<int>> graph20 = {
+        {0, 2, 1},
+        {2, 0, 2},
+        {1, 2, 0}};
+    g1.loadGraph(graph10);
+    g2.loadGraph(graph20);
+    cout << ariel::Algorithms::isConnected(g1 + g2) << endl;
+    cout << ariel::Algorithms::isContainsCycle(g2 - g1*2) << endl;
+    cout << ariel::Algorithms::isBipartite(g1 * g2) << endl;
+    cout << ariel::Algorithms::negativeCycle(g1*-1 - (g2-1)) << endl;
+    cout << ariel::Algorithms::negativeCycle(g1 * g2 / 2) << endl;
+    cout << ariel::Algorithms::shortestPath(g1 + g2, 0, 2) << endl;
+
     try
     {
         ariel::Graph g6 = g5 * g1; // Multiply the two graphs together.

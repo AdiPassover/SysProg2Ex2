@@ -4,7 +4,9 @@
 
 This is a C++ program that gives infromation about simple graphs based on adjacency matrices.
 Note that the adjacency matrix represents a simple graph, which means there is at most one edge from a vertex to another and there are no edges between a vertex and itself. Also, an edge's weight has to be an integer less than the maximum int value and more than the minimal int value.
-	@@ -10,62 +10,83 @@ Note that the adjacency matrix represents a simple graph, which means there is a
+
+
+**Instructions**
 
 1. Write an adjacency matrix as a vector of vectors of ints that represents a simple graph and 0 means no edge.
 2. Initiazlie a Graph object and use the loadGraph function to load the matrix to the graph.

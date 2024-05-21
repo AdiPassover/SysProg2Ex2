@@ -1,4 +1,7 @@
 // 326627635 | adi.peisach@gmail.com
+
+#include <ostream>
+#include "GraphOperations.hpp"
 #include "Graph.hpp"
 
 std::ostream& ariel::operator<<(std::ostream& os, const Graph& g) {

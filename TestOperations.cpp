@@ -167,6 +167,16 @@ TEST_CASE("Test scalar operations") {
     CHECK((--g1).printGraph() == "[-, 2, X]\n[2, -, 2]\n[X, 2, -]\n");
     CHECK((g1--).printGraph() == "[-, 2, X]\n[2, -, 2]\n[X, 2, -]\n");
     CHECK(g1.printGraph() == "[-, 1, X]\n[1, -, 1]\n[X, 1, -]\n");
+
+    ariel::Graph g6;
+    vector<vector<int>> weightedGraph10 = {
+            {0, 1, 1, 2},
+            {3, 0, 5, 8},
+            {13,21,0,34},
+            {55,89,-1,0}};
+    g6.loadGraph(weightedGraph10);
+    CHECK((++g6).printGraph() == "[-, 2, 2, 3]\n[4, -, 6, 9]\n[14, 22, -, 35]\n[56, 90, X, -]\n");
+    CHECK((--g6).printGraph() == "[-, 1, 1, 2]\n[3, -, 5, 8]\n[13, 21, -, 34]\n[55, 89, X, -]\n");
 }
 
 TEST_CASE("Comparing operations") {
@@ -207,20 +217,19 @@ TEST_CASE("Comparing operations") {
 
     bool res = g1 == g1copy;
     CHECK(res);
-    res = g2 == g20;
+    res = g2 == g20; // equals by no one bigger
     CHECK(res);
     res = g1 != g1copy;
     CHECK(!res);
     res = g1 != g3 && g1 != g2 && g1 != g4;
     CHECK(res);
 
-    res = g1 < g2 && g2 > g1;
+    res = g1 < g2 && g2 > g1; // smaller by num edges
     CHECK(res);
     res = g1 < g3 && g3 > g1;
     CHECK(res);
-    res = g2 < g3 && g3 > g2;
+    res = g2 < g3 && g3 > g2; // smaller by contains
     CHECK(res);
-    res = g3 > g2;
 
     res = g1 <= g1copy && g1copy >= g1;
     CHECK(res);
@@ -239,7 +248,7 @@ TEST_CASE("Comparing operations") {
     };
     g2.loadGraph(matrix2);
 
-    res = g1 > g2 && g2 < g1;
+    res = g1 > g2 && g2 < g1; // smaller by num vertices
     CHECK(res);
     res = g1 < g2 || g2 > g1;
     CHECK(!res);

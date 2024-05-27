@@ -43,13 +43,13 @@ namespace ariel {
     // Graph /= int
     Graph& operator/=(Graph& left, int scalar);
 
-    // Graph++
-    Graph& operator++(Graph& graph);
     // ++Graph
+    Graph& operator++(Graph& graph);
+    // Graph++
     Graph operator++(Graph& graph, int);
-    // Graph--
-    Graph& operator--(Graph& graph);
     // --Graph
+    Graph& operator--(Graph& graph);
+    // Graph--
     Graph operator--(Graph& graph, int);
 
     // Graph < Graph

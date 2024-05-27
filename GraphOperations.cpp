@@ -165,22 +165,22 @@ ariel::Graph& ariel::operator/=(Graph& g, int scalar) {
 }
 
 
-ariel::Graph& ariel::operator++(Graph& graph) { // Graph++
+ariel::Graph& ariel::operator++(Graph& graph) { // ++Graph
     graph += 1;
     return graph;
 }
 
-ariel::Graph ariel::operator++(Graph& graph, int) { // ++Graph
+ariel::Graph ariel::operator++(Graph& graph, int) { // Graph++
     graph += 1;
     return graph - 1;
 }
 
-ariel::Graph& ariel::operator--(Graph& graph) { // Graph--
+ariel::Graph& ariel::operator--(Graph& graph) { // --Graph
     graph -= 1;
     return graph;
 }
 
-ariel::Graph ariel::operator--(Graph& graph, int) { // --Graph
+ariel::Graph ariel::operator--(Graph& graph, int) { // Graph--
     graph -= 1;
     return graph + 1;
 }
